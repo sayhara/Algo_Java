@@ -8,24 +8,20 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N=Integer.parseInt(br.readLine());
-        String s=br.readLine();
-        String result="";
+        int start=Integer.parseInt(br.readLine());
+        PriorityQueue<Integer> pq=new PriorityQueue<>(Collections.reverseOrder());
 
-        for(int i=0;i<s.length();i++){
-            if(s.charAt(i)=='S') result+="*S";
-            else {
-                result+="*LL";
-                i++;
-            }
+        for(int i=0;i<N-1;i++){
+            pq.add(Integer.parseInt(br.readLine()));
         }
-        result+="*";
 
         int cnt=0;
-        for(int i=0;i<result.length();i++){
-            if(result.charAt(i)=='*') cnt++;
+        while(!pq.isEmpty() && start<=pq.peek()){
+            pq.add(pq.poll()-1);
+            start++;
+            cnt++;
         }
-
-        System.out.println(Math.min(cnt,N));
+        System.out.println(cnt);
 
     }
 }
