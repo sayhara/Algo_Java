@@ -11,30 +11,38 @@ public class BJ_1806 {
 
         int N=Integer.parseInt(st.nextToken());
         int S=Integer.parseInt(st.nextToken());
-        int arr[]=new int[N+1];
+        int arr[]=new int[N];
+        ArrayList<Integer> list=new ArrayList<>();
 
         st=new StringTokenizer(br.readLine());
         for(int i=0;i<N;i++){
             arr[i]=Integer.parseInt(st.nextToken());
         }
 
-        int start=0, end=0;
-        long sum=0, answer=Long.MAX_VALUE;
+        int start=0, end=0, sum=0;
 
-        while(start<=N && end<=N){
+        while(true){
+
             if(sum>=S){
-                answer=Math.min(answer,end-start);
                 sum-=arr[start];
                 start++;
+            }
+            else if(end==N){
+                break;
             } else {
                 sum+=arr[end];
                 end++;
             }
+            if(sum>=S) list.add(end-start);
         }
-        if(answer==Long.MAX_VALUE){
-            System.out.println(0);
+
+        if(list.size()!=0){
+            Collections.sort(list);
+            System.out.println(list.get(0));
         } else {
-            System.out.println(answer);
+            System.out.println(0);
         }
+
     }
+
 }

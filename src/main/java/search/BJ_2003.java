@@ -11,24 +11,29 @@ public class BJ_2003 {
 
         int N=Integer.parseInt(st.nextToken());
         int M=Integer.parseInt(st.nextToken());
-        int A[]=new int[10000];
+        int arr[]=new int[N];
 
         st=new StringTokenizer(br.readLine());
         for(int i=0;i<N;i++){
-            A[i]=Integer.parseInt(st.nextToken());
+            arr[i]=Integer.parseInt(st.nextToken());
         }
 
         int start=0, end=0, sum=0, count=0;
-        while(start<N){
-            if(sum>M || end==N){
-                sum-=A[start];
+        while(true){
+            if(sum>=M){
+                sum-=arr[start];
                 start++;
-            } else {
-                sum+=A[end];
+            }
+            else if(end==N){
+                break;
+            }
+            else {
+                sum+=arr[end];
                 end++;
             }
             if(sum==M) count++;
         }
         System.out.println(count);
     }
+
 }
