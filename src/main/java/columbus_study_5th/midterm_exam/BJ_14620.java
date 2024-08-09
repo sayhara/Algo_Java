@@ -1,52 +1,53 @@
+package columbus_study_5th.midterm_exam;
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class BJ_14620 {
 
     static int N;
-    static int arr[][];
+    static int flower[][];
     static boolean visited[][];
-    static int dr[]={-1,0,1,0,0};
-    static int dc[]={0,1,0,-1,0};
     static int min=Integer.MAX_VALUE;
+    static int dr[]={0,-1,0,1,0};
+    static int dc[]={0,0,1,0,-1};
 
     public static void main(String[] args) throws IOException {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
 
         N=Integer.parseInt(br.readLine());
-        arr=new int[N][N];
+        flower=new int[N][N];
         visited=new boolean[N][N];
 
         StringTokenizer st;
         for(int i=0;i<N;i++){
             st=new StringTokenizer(br.readLine());
             for(int j=0;j<N;j++){
-                arr[i][j]=Integer.parseInt(st.nextToken());
+                flower[i][j]=Integer.parseInt(st.nextToken());
             }
         }
 
         makeFlower(0,0);
         System.out.println(min);
+
     }
 
-    public static void makeFlower(int cnt, int sum){
+    public static void makeFlower(int cnt, int result){
 
         if(cnt==3){
-            min=Math.min(min,sum);
+            min=Math.min(min,result);
             return;
         }
 
         for(int i=1;i<N-1;i++){
             for(int j=1;j<N-1;j++){
                 if(checkVisit(i,j)){
-                    int value=visitAndSum(i,j);
-                    makeFlower(cnt+1,sum+value);
+                    int sum=VisitAndSum(i,j);
+                    makeFlower(cnt+1,result+sum);
                     visitFalse(i,j);
                 }
             }
         }
-
     }
 
     public static boolean checkVisit(int r, int c){
@@ -54,12 +55,15 @@ public class Main {
         for(int i=0;i<5;i++){
             int nr=r+dr[i];
             int nc=c+dc[i];
-            if(visited[nr][nc]) return false;
+
+            if(nr<0 || nc<0 || nr>=N || nc>=N || visited[nr][nc]){
+                return false;
+            }
         }
         return true;
     }
 
-    public static int visitAndSum(int r, int c){
+    public static int VisitAndSum(int r, int c){
 
         int sum=0;
 
@@ -67,7 +71,7 @@ public class Main {
             int nr=r+dr[i];
             int nc=c+dc[i];
             visited[nr][nc]=true;
-            sum+=arr[nr][nc];
+            sum+=flower[nr][nc];
         }
         return sum;
     }
@@ -79,5 +83,6 @@ public class Main {
             int nc=c+dc[i];
             visited[nr][nc]=false;
         }
+
     }
 }
