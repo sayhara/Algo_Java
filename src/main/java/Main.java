@@ -5,79 +5,53 @@ public class Main {
 
     static int N;
     static int arr[][];
-    static boolean visited[][];
-    static int dr[]={-1,0,1,0,0};
-    static int dc[]={0,1,0,-1,0};
-    static int min=Integer.MAX_VALUE;
+    static int value=0;
 
     public static void main(String[] args) throws IOException {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 
         N=Integer.parseInt(br.readLine());
-        arr=new int[N][N];
-        visited=new boolean[N][N];
+        arr=new int[N][2];
 
         StringTokenizer st;
         for(int i=0;i<N;i++){
             st=new StringTokenizer(br.readLine());
-            for(int j=0;j<N;j++){
-                arr[i][j]=Integer.parseInt(st.nextToken());
+            arr[i][0]=Integer.parseInt(st.nextToken());
+            arr[i][1]=Integer.parseInt(st.nextToken());
+        }
+
+        dfs(0,0);
+        System.out.println(value);
+
+    }
+
+    public static void dfs(int start, int result){
+
+        value=Math.max(value,result);
+        if(start==N) return;
+
+        if(arr[start][0]<=0){
+            dfs(start+1,result);
+        } else {
+            for (int i = 0; i < N; i++) {
+
+                if (start == i || arr[i][0] <= 0) continue;
+
+                arr[start][0] -= arr[i][1];
+                arr[i][0] -= arr[start][1];
+
+                int cnt = result;
+                if (arr[start][0] <= 0) cnt++;
+                if (arr[i][0] <= 0) cnt++;
+
+                dfs(start + 1, cnt);
+
+                arr[start][0] += arr[i][1];
+                arr[i][0] += arr[start][1];
+
             }
         }
 
-        makeFlower(0,0);
-        System.out.println(min);
-    }
-
-    public static void makeFlower(int cnt, int sum){
-
-        if(cnt==3){
-            min=Math.min(min,sum);
-            return;
-        }
-
-        for(int i=1;i<N-1;i++){
-            for(int j=1;j<N-1;j++){
-                if(checkVisit(i,j)){
-                    int value=visitAndSum(i,j);
-                    makeFlower(cnt+1,sum+value);
-                    visitFalse(i,j);
-                }
-            }
-        }
-
-    }
-
-    public static boolean checkVisit(int r, int c){
-
-        for(int i=0;i<5;i++){
-            int nr=r+dr[i];
-            int nc=c+dc[i];
-            if(visited[nr][nc]) return false;
-        }
-        return true;
-    }
-
-    public static int visitAndSum(int r, int c){
-
-        int sum=0;
-
-        for(int i=0;i<5;i++){
-            int nr=r+dr[i];
-            int nc=c+dc[i];
-            visited[nr][nc]=true;
-            sum+=arr[nr][nc];
-        }
-        return sum;
-    }
-
-    public static void visitFalse(int r, int c){
-
-        for(int i=0;i<5;i++){
-            int nr=r+dr[i];
-            int nc=c+dc[i];
-            visited[nr][nc]=false;
-        }
     }
 }
