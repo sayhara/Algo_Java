@@ -1,7 +1,9 @@
+package search;
+
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class BJ_15663 {
 
     static Set<String> set=new LinkedHashSet<>();
 
@@ -21,15 +23,16 @@ public class Main {
             arr[i]=Integer.parseInt(st.nextToken());
         }
         Arrays.sort(arr);
-        dfs(arr,output,visited,0,M);
+        permutation(arr,visited,output,0,M);
 
         for(String s:set){
             System.out.println(s);
         }
 
+
     }
 
-    public static void dfs(int arr[], int output[], boolean visited[], int depth, int r){
+    public static void permutation(int arr[], boolean visited[], int output[], int depth, int r){
 
         if(depth==r){
             String s="";
@@ -44,7 +47,7 @@ public class Main {
             if(!visited[i]){
                 visited[i]=true;
                 output[depth]=arr[i];
-                dfs(arr,output,visited,depth+1,r);
+                permutation(arr,visited,output,depth+1,r);
                 visited[i]=false;
             }
         }
