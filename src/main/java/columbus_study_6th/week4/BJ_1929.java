@@ -27,10 +27,10 @@ public class BJ_1929 {
 
         // TRUE : 소수아님
         prime[0]=prime[1]=true;
-        // 소수라면, 배수들은 제외
-        for(int i=2;i<=Math.sqrt(prime.length);i++){
+
+        for(int i=2;i<=Math.sqrt(prime.length);i++){ // 제곱근까지 탐색
             if(prime[i]) continue;
-            for(int j = i * i; j < prime.length; j += i) {
+            for(int j = i * i; j < prime.length; j += i) { // 소수라면 (false), 배수들은 제외
                 prime[j]=true;
             }
         }

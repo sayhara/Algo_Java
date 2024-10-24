@@ -3,50 +3,37 @@ import java.util.*;
 
 public class Main {
 
-    static Set<String> set=new LinkedHashSet<>();
+    static int N,M;
+    static boolean prime[];
 
     public static void main(String[] args) throws IOException {
 
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st=new StringTokenizer(br.readLine());
 
-        int N=Integer.parseInt(st.nextToken());
-        int M=Integer.parseInt(st.nextToken());
-        int arr[]=new int[N];
-        boolean visited[]=new boolean[N];
-        int output[]=new int[M];
+        M=Integer.parseInt(st.nextToken());
+        N=Integer.parseInt(st.nextToken());
+        prime=new boolean[N+1];
 
-        st=new StringTokenizer(br.readLine());
-        for(int i=0;i<N;i++){
-            arr[i]=Integer.parseInt(st.nextToken());
-        }
-        Arrays.sort(arr);
-        dfs(arr,output,visited,0,M);
-
-        for(String s:set){
-            System.out.println(s);
+        check_prime();
+        for(int i=M;i<=N;i++){
+            if(!prime[i]){
+                System.out.println(i);
+            }
         }
 
     }
 
-    public static void dfs(int arr[], int output[], boolean visited[], int depth, int r){
+    public static void check_prime(){
 
-        if(depth==r){
-            String s="";
-            for(int i=0;i<r;i++){
-                s+=output[i]+" ";
-            }
-            set.add(s);
-            return;
-        }
+        prime[0]=prime[1]=true;
 
-        for(int i=0;i<arr.length;i++){
-            if(!visited[i]){
-                visited[i]=true;
-                output[depth]=arr[i];
-                dfs(arr,output,visited,depth+1,r);
-                visited[i]=false;
+        for(int i=2;i<=Math.sqrt(prime.length);i++){ // 제곱근
+            if(prime[i]) continue;
+            for(int j=i*i;j<prime.length;j=j+i){
+                prime[j]=true;
             }
         }
+
     }
 }
