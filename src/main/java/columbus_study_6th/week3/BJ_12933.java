@@ -1,6 +1,7 @@
 package columbus_study_6th.week3;
 import java.io.*;
 
+// q,u,a,c,k가 나오기 전에는 우는 것으로 간주 x
 public class BJ_12933 {
 
     public static void main(String[] args) throws IOException {

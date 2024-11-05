@@ -27,6 +27,12 @@ public class BJ_20920 {
                 if (Integer.compare(map.get(s1),map.get(s2))!=0) {
                     return Integer.compare(map.get(s2),map.get(s1));
                 }
+                /*
+                if (map.get(s1)!=map.get(s2)) {
+                    return map.get(s2)-map.get(s1);
+                }
+                 */
+
                 // 2순위 : 길이
                 if(s1.length()!=s2.length()){
                     return s2.length()-s1.length();
